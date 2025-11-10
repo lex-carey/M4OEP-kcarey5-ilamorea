@@ -121,14 +121,15 @@ void Engine::readFromFile(std::string filepath) {
     while (ins >> letter) {
         draw = true;
         switch(letter) {
-            case '1': c = color(114.0/255, 97.0/255, 152.0/255); break;
-            case '2': c = color(145.0/255, 126.0/255, 189.0/255); break;
-            case '3': c = color(162.0/255, 141.0/255, 208.0/255); break;
-            case '4': c = color(185.0/255, 168.0/255, 224.0/255); break;
-            case '5': c = color(51.0/255, 35.0/255, 89.0/255); break;
-            case '6': c = color(79.0/255, 60.0/255, 122.0/255); break;
-            case '7': c = color(100.0/255, 81.0/255, 141.0/255); break;
-            case '8': c = color(121.0/255, 104.0/255, 158.0/255); break;
+            case '1': c = color(138.0/255, 131.0/255, 185.0/255); break;
+            case '2': c = color(154.0/255, 147.0/255, 203.0/255); break;
+            case '3': c = color(167.0/255, 160.0/255, 217.0/255); break;
+            case '4': c = color(185.0/255, 179.0/255, 228.0/255); break;
+            case '5': c = color(32.0/255, 21.0/255, 57.0/255); break;
+            case '6': c = color(51.0/255, 35.0/255, 89.0/255); break;
+            case '7': c = color(79.0/255, 60.0/255, 122.0/255); break;
+            case '8': c = color(100.0/255, 81.0/255, 141.0/255); break;
+            case '9': c = color( 157.0/255, 172.0/255, 222.0/255); break;
             case 'b': c = color(0, 0, 0); break;
 
             default: // newline
