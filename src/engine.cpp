@@ -23,7 +23,7 @@ unsigned int Engine::initWindow(bool debug) {
 #endif
     glfwWindowHint(GLFW_RESIZABLE, false);
 
-    window = glfwCreateWindow(width, height, "engine", nullptr, nullptr);
+    window = glfwCreateWindow(width, height, "flappy bat", nullptr, nullptr);
     glfwMakeContextCurrent(window);
 
     // glad: load all OpenGL function pointers
