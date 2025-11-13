@@ -91,6 +91,10 @@ void Engine::update() {
     float currentFrame = glfwGetTime();
     deltaTime = currentFrame - lastFrame;
     lastFrame = currentFrame;
+
+    for (Cloud& c : clouds) {
+        c.moveXWithinBounds(-1, width);
+    }
 }
 
 void Engine::render() {
@@ -103,6 +107,10 @@ void Engine::render() {
     for (unique_ptr<Shape> &square : squares) {
         square->setUniforms();
         square->draw();
+    }
+
+    for (Cloud& c : clouds) {
+        c.setUniformsAndDraw();
     }
 
     glfwSwapBuffers(window);

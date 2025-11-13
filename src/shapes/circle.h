@@ -3,8 +3,30 @@
 
 #include "shape.h"
 #include "../shader/shader.h"
+
 using std::vector, glm::vec2, glm::vec3, glm::normalize, glm::dot;
 
+
+// Union allows students to access the color as a vec4 with color.vec or as a float with color.red, etc.
+struct color1 {
+    union {
+        glm::vec4 vec;
+        struct {
+            float red, green, blue, alpha;
+        };
+    };
+
+    /* Constructors */
+    color1() : vec(0.0f, 0.0f, 0.0f, 1.0f) {}
+    color1(float r, float g, float b) : vec(r, g, b, 1.0f) {}
+    color1(float r, float g, float b, float a) : vec(r, g, b, a) {}
+
+    /* Overloaded Operator */
+    friend std::ostream &operator<<(std::ostream &outs, const color1 &c) {
+        outs << "Red: " << c.red << ", Green: " << c.green << ", Blue: " << c.blue << ", Alpha: " << c.alpha;
+        return outs;
+    }
+};
 
 class Circle : public Shape {
 private:
@@ -28,7 +50,7 @@ public:
         initVBO();
     }
 
-    Circle(Shader & shader, vec2 pos, vec2 size, color c)
+    Circle(Shader & shader, vec2 pos, vec2 size, color1 c)
         : Circle(shader, pos, size, vec2(0, 0), c) {}
 
     Circle(Shader &shader, vec2 pos, float radius, color c)
@@ -38,7 +60,7 @@ public:
         : Circle(shader, pos, vec2(radius * 2, radius * 2), velocity, c) {}
 
     // override setUniforms to set the radius uniform
-    void setUniforms() const override;
+    void setUniforms() const  ;
 
     /// @brief Destroy the Circle object
     /// @details destroys the VAO and VBO associated with the circle
