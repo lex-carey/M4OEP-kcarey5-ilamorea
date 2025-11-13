@@ -1,5 +1,5 @@
-#ifndef GRAPHICS_SHADERMANAGER_H
-#define GRAPHICS_SHADERMANAGER_H
+#ifndef M4OEP_SHADERMANAGER_H
+#define M4OEP_SHADERMANAGER_H
 
 #include "shader.h"
 
@@ -43,4 +43,4 @@ private:
      /// @return The shader that was loaded
     Shader loadShaderFromFile(const char *vShaderFile, const char *fShaderFile, const char *gShaderFile=nullptr);};
 
-#endif //GRAPHICS_SHADERMANAGER_H
+#endif //M4OEP_SHADERMANAGER_H

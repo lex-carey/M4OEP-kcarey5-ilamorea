@@ -1,5 +1,5 @@
-#ifndef GRAPHICS_CIRCLE_H
-#define GRAPHICS_CIRCLE_H
+#ifndef M4OEP_CIRCLE_H
+#define M4OEP_CIRCLE_H
 
 #include "shape.h"
 #include "../shader/shader.h"
@@ -97,4 +97,4 @@ public:
 };
 
 
-#endif //GRAPHICS_CIRCLE_H
+#endif //M4OEP_CIRCLE_H

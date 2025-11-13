@@ -1,5 +1,5 @@
-#ifndef GRAPHICS_RECT_H
-#define GRAPHICS_RECT_H
+#ifndef M4OEP_RECT_H
+#define M4OEP_RECT_H
 
 #include "shape.h"
 #include "../shader/shader.h"
@@ -39,4 +39,4 @@ public:
 };
 
 
-#endif //GRAPHICS_RECT_H
+#endif //M4OEP_RECT_H

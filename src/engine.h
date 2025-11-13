@@ -1,5 +1,5 @@
-#ifndef GRAPHICS_ENGINE_H
-#define GRAPHICS_ENGINE_H
+#ifndef M4OEP_ENGINE_H
+#define M4OEP_ENGINE_H
 
 #include <vector>
 #include <memory>
@@ -109,4 +109,4 @@ class Engine {
 
 };
 
-#endif //GRAPHICS_ENGINE_H
+#endif //M4OEP_ENGINE_H

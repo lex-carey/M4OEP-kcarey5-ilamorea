@@ -1,5 +1,5 @@
-#ifndef RUNNER_CLOUD_H
-#define RUNNER_CLOUD_H
+#ifndef M4OEP_CLOUD_H
+#define M4OEP_CLOUD_H
 
 #include "circle.h"
 #include "rect.h"
@@ -31,4 +31,4 @@ public:
     bool isOverlapping(const Rect& r) const;
 };
 
-#endif //RUNNER_CLOUD_H
+#endif //M4OEP_CLOUD_H

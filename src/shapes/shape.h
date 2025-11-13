@@ -1,5 +1,5 @@
-#ifndef GRAPHICS_SHAPE_H
-#define GRAPHICS_SHAPE_H
+#ifndef M4OEP_SHAPE_H
+#define M4OEP_SHAPE_H
 
 #include "glm/glm.hpp"
 #include <vector>
@@ -142,4 +142,4 @@ protected:
         vector<unsigned int> indices;
 };
 
-#endif //GRAPHICS_SHAPE_H
+#endif //M4OEP_SHAPE_H
