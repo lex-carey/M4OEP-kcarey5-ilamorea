@@ -2,6 +2,10 @@
 #include <fstream>
 using namespace std;
 
+
+enum state {start, play, over};
+state screen;
+
 Engine::Engine() : keys() {
     this->initWindow();
     this->initShaders();
@@ -112,7 +116,37 @@ void Engine::render() {
     for (Cloud& c : clouds) {
         c.setUniformsAndDraw();
     }
-
+    /*
+    switch (screen) {
+        case start: { TODO: What button to press to start?
+            string message = "Press s to start";
+            // (12 * message.length()) is the offset to center text.
+            // 12 pixels is the width of each character scaled by 1.
+            // NOTE: This line changes the shader being used to the font shader.
+            //  If you want to draw shapes again after drawing text,
+            //  you'll need to call shapeShader.use() again first.
+            this->fontRenderer->renderText(message, width/2 - (12 * message.length()), height/2, projection, 1, vec3{1, 1, 1});
+            break;
+        }
+        case play: {
+            //TODO: Figure out what we exactly need here.
+            // Render font on top of spawn button
+            for (unique_ptr<Shape> &c : confetti) {
+                c->setUniforms();
+                c->draw();
+            }
+            spawnButton->setUniforms();
+            this->spawnButton->draw();
+            fontRenderer->renderText("Spawn", spawnButton->getPos().x - 30, spawnButton->getPos().y - 5, projection, 0.5, vec3{1, 1, 1});
+            break;
+        }
+        case over: {
+            string message = "You win!";
+            //TODO: This section should display time/score with an "GAME OVER" type message
+            this ->fontRenderer->renderText(message,width/2 - (12 * message.length()), height/2, projection, 1, vec3{1, 1, 1} );
+            break;
+        }
+    } */
     glfwSwapBuffers(window);
 }
 
