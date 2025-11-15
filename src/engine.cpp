@@ -151,8 +151,8 @@ void Engine::render() {
             //TODO: This section should display time/score with an "GAME OVER" type message
             this ->fontRenderer->renderText(message,width/2 - (12 * message.length()), height/2, projection, 1, vec3{1, 1, 1} );
             break;
-        }
-    } */
+        }*/
+    }
     glfwSwapBuffers(window);
 }
 
