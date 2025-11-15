@@ -51,6 +51,13 @@ FetchContent_Declare(
 )
 FetchContent_Populate(glad)
 
+# Fetch Freetype
+FetchContent_Declare(
+        freetype
+        URL https://download.savannah.gnu.org/releases/freetype/freetype-${FREETYPE_VERSION}.tar.xz
+        DOWNLOAD_EXTRACT_TIMESTAMP TRUE
+)
+FetchContent_MakeAvailable(freetype)
 # Include GLAD
 include_directories(${glad_SOURCE_DIR}/include)
 
@@ -99,4 +106,4 @@ add_executable(${PROJECT_NAME} ${PROJECT_SOURCES} ${PROJECT_HEADERS}
                                ${VENDORS_SOURCES}
 )
 # Include libraries
-target_link_libraries(${PROJECT_NAME} glfw glm) 
+target_link_libraries(${PROJECT_NAME} glfw glm freetype)
