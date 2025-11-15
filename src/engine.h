@@ -10,6 +10,7 @@
 #include "shapes/rect.h"
 #include "shapes/shape.h"
 #include "shapes/Cloud.h"
+#include "font/fontRenderer.h"
 using std::vector, std::unique_ptr, std::make_unique, glm::ortho, glm::mat4, glm::vec3, glm::vec4;
 
 /**
@@ -78,6 +79,7 @@ class Engine {
         /// @brief Updates the game state.
         /// @details (e.g. collision detection, delta time, etc.)
         void update();
+
 
         /// @brief Renders the game state.
         /// @details Displays/renders objects on the screen.

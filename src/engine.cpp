@@ -85,7 +85,9 @@ void Engine::processInput() {
     // Mouse position is inverted because the origin of the window is in the top left corner
     MouseY = height - MouseY; // Invert y-axis of mouse position
     bool mousePressed = glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS;
-
+    if (mousePressed == true) {
+        screen = play;
+    }
     // Save mousePressed for next frame
     mousePressedLastFrame = mousePressed;
 }
@@ -95,12 +97,13 @@ void Engine::update() {
     float currentFrame = glfwGetTime();
     deltaTime = currentFrame - lastFrame;
     lastFrame = currentFrame;
+    if (screen == play){
+        for (Cloud& c : clouds) {
+            c.moveXWithinBounds(-1, width);
+        }
 
-    for (Cloud& c : clouds) {
-        c.moveXWithinBounds(-1, width);
     }
 }
-
 void Engine::render() {
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f); // Set background color
     glClear(GL_COLOR_BUFFER_BIT);
@@ -108,26 +111,29 @@ void Engine::render() {
     // Set shader to use for all shapes
     shapeShader.use();
 
-    for (unique_ptr<Shape> &square : squares) {
-        square->setUniforms();
-        square->draw();
+    if (screen == play) {
+        for (unique_ptr<Shape> &square : squares) {
+            square->setUniforms();
+            square->draw();
+        }
+
+        for (Cloud& c : clouds) {
+            c.setUniformsAndDraw();
+        }
     }
 
-    for (Cloud& c : clouds) {
-        c.setUniformsAndDraw();
-    }
-    /*
     switch (screen) {
-        case start: { TODO: What button to press to start?
-            string message = "Press s to start";
+        case start: {
+            string message = "Press m1 to start";
             // (12 * message.length()) is the offset to center text.
             // 12 pixels is the width of each character scaled by 1.
             // NOTE: This line changes the shader being used to the font shader.
             //  If you want to draw shapes again after drawing text,
             //  you'll need to call shapeShader.use() again first.
-            this->fontRenderer->renderText(message, width/2 - (12 * message.length()), height/2, projection, 1, vec3{1, 1, 1});
+         //   this->fontRender->renderText(message, width/2 - (12 * message.length()), height/2, projection, 1, vec3{1, 1, 1});
             break;
         }
+        /*
         case play: {
             //TODO: Figure out what we exactly need here.
             // Render font on top of spawn button
