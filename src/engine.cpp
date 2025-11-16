@@ -61,6 +61,11 @@ void Engine::initShaders() {
 void Engine::initShapes() {
     // Relative file path from inside cmake-build-debug folder to the txt file
     readFromFile("../res/art/scene.txt");
+    // Init Cloud
+    clouds.push_back(Cloud(shapeShader, vec2(200, 500)));
+    clouds.push_back(Cloud(shapeShader, vec2(400, 520)));
+    clouds.push_back(Cloud(shapeShader, vec2(325, 480)));
+
 }
 
 void Engine::processInput() {
@@ -121,7 +126,6 @@ void Engine::render() {
             c.setUniformsAndDraw();
         }
     }
-
     switch (screen) {
         case start: {
             string message = "Press m1 to start";
