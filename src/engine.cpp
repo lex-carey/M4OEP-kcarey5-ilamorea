@@ -130,7 +130,7 @@ void Engine::render() {
             // NOTE: This line changes the shader being used to the font shader.
             //  If you want to draw shapes again after drawing text,
             //  you'll need to call shapeShader.use() again first.
-         //   this->fontRender->renderText(message, width/2 - (12 * message.length()), height/2, projection, 1, vec3{1, 1, 1});
+           // this->fontRender->renderText(message, width/2 - (12 * message.length()), height/2, projection, 1, vec3{1, 1, 1});
             break;
         }
         /*

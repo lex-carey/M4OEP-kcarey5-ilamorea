@@ -49,7 +49,7 @@ public:
         initVAO();
         initVBO();
     }
-
+/*
     Circle(Shader & shader, vec2 pos, vec2 size, color::color c)
         : Circle(shader, pos, size, vec2(0, 0), c) {}
 
@@ -58,7 +58,7 @@ public:
 
     Circle(Shader &shader, vec2 pos, float radius, vec2 velocity, color::color c)
         : Circle(shader, pos, vec2(radius * 2, radius * 2), velocity, c) {}
-
+    */
     // override setUniforms to set the radius uniform
     void setUniforms() const  ;
 

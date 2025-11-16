@@ -7,6 +7,7 @@
 #include <GLFW/glfw3.h>
 
 #include "shader/shaderManager.h"
+#include "font/fontRenderer.h"
 #include "shapes/rect.h"
 #include "shapes/shape.h"
 #include "shapes/Cloud.h"
