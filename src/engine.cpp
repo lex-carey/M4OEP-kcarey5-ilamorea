@@ -4,7 +4,7 @@ using namespace std;
 
 
 enum state {start, play, over};
-state screen;
+state screen = start;
 
 Engine::Engine() : keys() {
     this->initWindow();
@@ -51,7 +51,7 @@ void Engine::initShaders() {
 
     // Load shader into shader manager and retrieve it
     shapeShader = this->shaderManager->loadShader("../res/shaders/shape.vert", "../res/shaders/shape.frag",  nullptr, "shape");
-
+    fontRenderer = make_unique<FontRenderer>(shaderManager->getShader("text"), "../res/fonts/MxPlus_IBM_BIOS.ttf", 24);
     // Set uniforms
     textShader.setVector2f("vertex", vec4(100, 100, .5, .5));
     shapeShader.use();
@@ -130,7 +130,7 @@ void Engine::render() {
             // NOTE: This line changes the shader being used to the font shader.
             //  If you want to draw shapes again after drawing text,
             //  you'll need to call shapeShader.use() again first.
-           // this->fontRender->renderText(message, width/2 - (12 * message.length()), height/2, projection, 1, vec3{1, 1, 1});
+            this->fontRenderer->renderText(message, width/2 - (12 * message.length()), height/2, PROJECTION, 1, vec3{1, 1, 1});
             break;
         }
         /*

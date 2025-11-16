@@ -30,9 +30,14 @@ class Engine {
         /// @details Index this array with GLFW_KEY_{key} to get the state of a key.
         bool keys[1024];
 
+
         /// @brief Responsible for loading and storing all the shaders used in the project.
         /// @details Initialized in initShaders()
         unique_ptr<ShaderManager> shaderManager;
+
+      /// @brief Responsible for rendering text on the screen.
+      /// @details Initialized in initShaders()
+          unique_ptr<FontRenderer> fontRenderer;
 
         // Shapes
         vector<unique_ptr<Shape>> squares;
