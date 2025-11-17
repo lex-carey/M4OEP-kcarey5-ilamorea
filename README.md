@@ -9,8 +9,10 @@ We used the following concepts from the Module 4 concepts menu:
   * We used the graphics frameworks taught to us in-class to create this program
 * Drawing
   * All elements seen on-screen were rendered via drawing
+* Mouse input(s)
+  * The start screen prompts the user to left click to start the game. Once the user does this, they are taken to the game screen.
 * Keyboard input(s)
-  * If escape key is pressed, window will close. R is pressed to start the game. Space is used to make the bat flap.
+  * If escape key is pressed, window will close. R is pressed to restart the game once the player has lost.
 * Non-input based event(s)
   * The cloud obstacles move across the screen towards the bat continuously through a non-input based event.
 * Multiple screens in the same graphics window

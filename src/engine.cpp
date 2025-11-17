@@ -51,7 +51,11 @@ void Engine::initShaders() {
 
     // Load shader into shader manager and retrieve it
     shapeShader = this->shaderManager->loadShader("../res/shaders/shape.vert", "../res/shaders/shape.frag",  nullptr, "shape");
+
+    // Configure text shader and renderer
+    textShader = shaderManager->loadShader("../res/shaders/text.vert", "../res/shaders/text.frag", nullptr, "text");
     fontRenderer = make_unique<FontRenderer>(shaderManager->getShader("text"), "../res/fonts/MxPlus_IBM_BIOS.ttf", 24);
+
     // Set uniforms
     textShader.setVector2f("vertex", vec4(100, 100, .5, .5));
     shapeShader.use();
@@ -155,7 +159,7 @@ void Engine::render() {
 
     switch (screen) {
         case start: {
-            string message = "Press m1 to start";
+            string message = "Press left click to start";
             // (12 * message.length()) is the offset to center text.
             // 12 pixels is the width of each character scaled by 1.
             // NOTE: This line changes the shader being used to the font shader.
