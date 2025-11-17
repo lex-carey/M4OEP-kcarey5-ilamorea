@@ -116,6 +116,9 @@ void Engine::processInput() {
         }
 
     }
+    if (keys[GLFW_KEY_SPACE]) {
+        //bat x+, y+.
+    }
 }
 void Engine::update() {
     // Calculate delta time
@@ -135,7 +138,7 @@ void Engine::update() {
         }
 
     }
-
+    //make bat go down
 }
 void Engine::render() {
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f); // Set background color
