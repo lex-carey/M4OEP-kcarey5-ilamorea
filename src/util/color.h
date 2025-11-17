@@ -38,6 +38,7 @@ const color BLACK = color(0.0f, 0.0f, 0.0f);
 const color GRAY = color(0.5f, 0.5f, 0.5f);
 const color LIGHT_GRAY = color(0.75f, 0.75f, 0.75f);
 const color DARK_GRAY = color(0.2f, 0.2f, 0.2f);
+const color NONE = color(0.0f, 0.0f, 0.0f, 0.0f);
 
 
 //// How to do this with a class:
