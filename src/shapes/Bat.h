@@ -7,7 +7,7 @@
 class Bat : public Rect {
 
     public:
-        Bat(Shader &shader, vec2 pos, vec2 shape);
+        Bat(Shader &shader, vec2 pos, vec2 shape, struct color color);
         void drawUp();
         void drawDown();
 };
