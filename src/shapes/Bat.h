@@ -2,6 +2,7 @@
 #define M4OEP_BAT_H
 #include "rect.h"
 #include "shape.h"
+#include "../shader/shader.h"
 
 class Bat : public Rect {
 

@@ -87,6 +87,12 @@ void Engine::processInput() {
     if (keys[GLFW_KEY_ESCAPE])
         glfwSetWindowShouldClose(window, true);
 
+    if (screen == over) {
+        if (keys[GLFW_KEY_R]) {
+            screen = play;
+        }
+
+    }
     // Mouse position saved to check for collisions
     glfwGetCursorPos(window, &MouseX, &MouseY);
 
