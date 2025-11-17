@@ -136,7 +136,9 @@ void Engine::update() {
                 screen = over;
             }
         }
-
+        for (Bat& b : bat) {
+            b.moveY(-1); //needs to actually refer to a getter to get current y position.
+        }
     }
     //make bat go down
 }
