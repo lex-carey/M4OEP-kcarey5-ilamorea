@@ -124,8 +124,14 @@ void Engine::update() {
             c.moveXWithinBounds(-1, width);
 
         }
+        for ( Cloud& r : clouds) {
+            if (r.isOverlapping(*bat)) {
+                screen = over;
+            }
+        }
 
     }
+
 }
 void Engine::render() {
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f); // Set background color
@@ -161,6 +167,7 @@ void Engine::render() {
 
         case play: {
             //TODO: Figure out what we exactly need here.
+
 
             break;
         }
