@@ -11,7 +11,7 @@
 #include "shapes/rect.h"
 //#include "shapes/shape.h"
 #include "shapes/Cloud.h"
-
+#include "shapes/Bat.h"
 using std::vector, std::unique_ptr, std::make_unique, glm::ortho, glm::mat4, glm::vec3, glm::vec4;
 
 /**
@@ -46,6 +46,7 @@ class Engine {
          vector<unique_ptr<Rect>> buildings2;
          vector<unique_ptr<Rect>> buildings3;
         unique_ptr<Rect> line;
+        unique_ptr<Rect> bat;
         // Shaders
         Shader shapeShader;
         Shader textShader;

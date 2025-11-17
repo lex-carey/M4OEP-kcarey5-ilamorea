@@ -70,6 +70,7 @@ void Engine::initShapes() {
      clouds.push_back(Cloud(shapeShader, vec2(rand () % 200 + 125, rand () % 480 + 75)));
  }
 line = make_unique<Rect>(shapeShader, vec2(0,0), vec2 (1,800), color(0, 0, 0));
+    bat = make_unique<Rect>(shapeShader, vec2(width, height), vec2(0, 0), color(0,0,0));
 }
 
 void Engine::processInput() {
