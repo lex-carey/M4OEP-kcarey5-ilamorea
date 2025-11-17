@@ -5,7 +5,7 @@ using namespace std;
 
 enum state {start, play, over};
 state screen = start;
-int score = 0;
+
 Engine::Engine() : keys() {
     this->initWindow();
     this->initShaders();
@@ -66,21 +66,10 @@ void Engine::initShapes() {
         clouds.push_back(Cloud(shapeShader, vec2(rand() % 200 + 100, rand() % 500 + 100)));
         clouds.push_back(Cloud(shapeShader, vec2(400, rand () % 520 + 50)));
         clouds.push_back(Cloud(shapeShader, vec2(325, rand () % 480 + 75)));
-
-
-    int totalBuildingWidth = 0;
-    vec2 buildingSize;
-    while (totalBuildingWidth < width + 50) {
-        // Building height between 50-100
-        buildingSize.y = rand() % 25 + 50;
-        // Building width between 30-50
-        buildingSize.x = rand() % 50 + 50;
-        buildings1.push_back(make_unique<Rect>(shapeShader,
-                                               vec2(totalBuildingWidth + (buildingSize.x / 2.0) + 5,
-                                                    ((buildingSize.y / 2.0) + 50)),
-                                               buildingSize, color(1,0,0,1)));
-        totalBuildingWidth += buildingSize.x + 5;
-    }
+ if (clouds.size() > 4) {
+     clouds.push_back(Cloud(shapeShader, vec2(rand () % 200 + 125, rand () % 480 + 75)));
+ }
+line = make_unique<Rect>(shapeShader, vec2(0,0), vec2 (1,800), color(0, 0, 0));
 }
 
 void Engine::processInput() {
@@ -110,26 +99,23 @@ void Engine::processInput() {
     }
     // Save mousePressed for next frame
     mousePressedLastFrame = mousePressed;
-}
+    for ( Cloud& r : clouds) {
+        if (r.isOverlapping(*line)) {
+            clouds.pop_back();
+        }
 
+    }
+}
 void Engine::update() {
     // Calculate delta time
     float currentFrame = glfwGetTime();
     deltaTime = currentFrame - lastFrame;
     lastFrame = currentFrame;
+    float score = glfwGetTime();
     if (screen == play){
         for (Cloud& c : clouds) {
             c.moveXWithinBounds(-1, width);
-            for (int i = 0; i < buildings1.size(); ++i) {
-                // Move all the dark blue buildings to the left
-                buildings1[i]->moveX(-2.0);
-                // If a building has moved off the screen
-                if (buildings1[i]->getPosX() < -(buildings1[i]->getSize().x/2)) {
-                    // Set it to the right of the screen so that it passes through again
-                    int buildingOnLeft = (buildings1[i] == buildings1[0]) ? buildings1.size()-1 : i - 1;
-                    buildings1[i]->setPosX(buildings1[buildingOnLeft]->getPosX() + buildings1[buildingOnLeft]->getSize().x/2 + buildings1[i]->getSize().x/2 + 5);
-                }
-            }
+
         }
 
     }
@@ -150,9 +136,10 @@ void Engine::render() {
         for (Cloud& c : clouds) {
             c.setUniformsAndDraw();
         }
-        buildings1[0]->setUniforms();
-        buildings1[0]->draw();
+
     }
+
+
     switch (screen) {
         case start: {
             string message = "Press m1 to start";
@@ -164,25 +151,21 @@ void Engine::render() {
             this->fontRenderer->renderText(message, width/2 - (12 * message.length()), height/2, PROJECTION, 1, vec3{1, 1, 1});
             break;
         }
-        /*
+
         case play: {
             //TODO: Figure out what we exactly need here.
-            // Render font on top of spawn button
-            for (unique_ptr<Shape> &c : confetti) {
-                c->setUniforms();
-                c->draw();
-            }
-            spawnButton->setUniforms();
-            this->spawnButton->draw();
-            fontRenderer->renderText("Spawn", spawnButton->getPos().x - 30, spawnButton->getPos().y - 5, projection, 0.5, vec3{1, 1, 1});
+
             break;
         }
         case over: {
-            string message = "You win!";
+            string message = "You lose! Press R to restart, or escape to exit!";
+            float score = glfwGetTime();
+            string scoreString = to_string(score);
             //TODO: This section should display time/score with an "GAME OVER" type message
-            this ->fontRenderer->renderText(message,width/2 - (12 * message.length()), height/2, projection, 1, vec3{1, 1, 1} );
+            this ->fontRenderer->renderText(message,width/2 - (12 * message.length()), height/2, PROJECTION, 1, vec3{1, 1, 1} );
+            this ->fontRenderer->renderText(scoreString,width/2 - (12 * message.length()), height/3, PROJECTION, 1, vec3{1, 1, 1} );
             break;
-        }*/
+        }
     }
     glfwSwapBuffers(window);
 }

@@ -45,7 +45,7 @@ class Engine {
          vector<unique_ptr<Rect>> buildings1;
          vector<unique_ptr<Rect>> buildings2;
          vector<unique_ptr<Rect>> buildings3;
-
+        unique_ptr<Rect> line;
         // Shaders
         Shader shapeShader;
         Shader textShader;
