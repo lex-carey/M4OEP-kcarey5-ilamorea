@@ -42,6 +42,10 @@ class Engine {
         // Shapes
         vector<unique_ptr<Shape>> squares;
         vector<Cloud> clouds;
+         vector<unique_ptr<Rect>> buildings1;
+         vector<unique_ptr<Rect>> buildings2;
+         vector<unique_ptr<Rect>> buildings3;
+
         // Shaders
         Shader shapeShader;
         Shader textShader;
