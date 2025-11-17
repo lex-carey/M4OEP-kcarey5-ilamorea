@@ -56,25 +56,36 @@ void Engine::initShaders() {
     textShader = shaderManager->loadShader("../res/shaders/text.vert", "../res/shaders/text.frag", nullptr, "text");
     fontRenderer = make_unique<FontRenderer>(shaderManager->getShader("text"), "../res/fonts/MxPlus_IBM_BIOS.ttf", 24);
 
+    //bat shader
+    batShader = shaderManager->loadShader("../res/shaders/sprite.vert", "../res/shaders/sprite.frag",  nullptr, "sprite");
+    spriteRenderer = make_unique<SpriteRenderer>(shaderManager->getShader("sprite"));
+    batTexture = shaderManager->loadTexture("../art/bat-down.png", true, "bat");
+
     // Set uniforms
     textShader.setVector2f("vertex", vec4(100, 100, .5, .5));
     shapeShader.use();
     shapeShader.setMatrix4("projection", this->PROJECTION);
+    batShader.use();
+    mat4 projection = glm::ortho(0.0f, static_cast<float>(this->width),
+        static_cast<float>(this->height), 0.0f, -1.0f, 1.0f);
+    batShader.setInteger("image", 0);
+    batShader.setMatrix4("projection", projection);
 }
 
 void Engine::initShapes() {
     // Relative file path from inside cmake-build-debug folder to the txt file
     readFromFile("../res/art/scene.txt");
-    // Init Cloud
 
-        clouds.push_back(Cloud(shapeShader, vec2(rand() % 200 + 100, rand() % 500 + 100)));
-        clouds.push_back(Cloud(shapeShader, vec2(400, rand () % 520 + 50)));
-        clouds.push_back(Cloud(shapeShader, vec2(325, rand () % 480 + 75)));
- if (clouds.size() > 4) {
-     clouds.push_back(Cloud(shapeShader, vec2(rand () % 200 + 125, rand () % 480 + 75)));
- }
-line = make_unique<Rect>(shapeShader, vec2(0,0), vec2 (1,800), color(0, 0, 0));
-    bat = make_unique<Rect>(shapeShader, vec2(width, height), vec2(0, 0), color(0,0,0));
+    //Loading Sprite
+    bat = make_unique<Bat>(batShader, vec2(400, 400), vec2(78, 52), color(1, 1, 1));
+    // Init Cloud
+    clouds.push_back(Cloud(shapeShader, vec2(rand() % 200 + 100, rand() % 500 + 100)));
+    clouds.push_back(Cloud(shapeShader, vec2(400, rand () % 520 + 50)));
+    clouds.push_back(Cloud(shapeShader, vec2(325, rand () % 480 + 75)));
+    if (clouds.size() > 4) {
+        clouds.push_back(Cloud(shapeShader, vec2(rand () % 200 + 125, rand () % 480 + 75)));
+    }
+    line = make_unique<Rect>(shapeShader, vec2(0,0), vec2 (1,800), color(0, 0, 0));
 }
 
 void Engine::processInput() {
@@ -114,10 +125,15 @@ void Engine::processInput() {
         if (r.isOverlapping(*line)) {
             clouds.pop_back();
         }
-
+        // game over if bat hits ground
+        if (bat->getBottom() <= 0) screen = over;
+        //makes bat fall
+        if (!keys[GLFW_KEY_SPACE]) {
+            bat->fall();
+        }
     }
     if (keys[GLFW_KEY_SPACE]) {
-        //bat x+, y+.
+        bat->fly();
     }
 }
 void Engine::update() {
@@ -136,11 +152,7 @@ void Engine::update() {
                 screen = over;
             }
         }
-        for (Bat& b : bat) {
-            b.moveY(-1); //needs to actually refer to a getter to get current y position.
-        }
     }
-    //make bat go down
 }
 void Engine::render() {
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f); // Set background color
@@ -158,8 +170,10 @@ void Engine::render() {
         for (Cloud& c : clouds) {
             c.setUniformsAndDraw();
         }
-
+        spriteRenderer->DrawSprite(shaderManager->getTexture("bat"),
+        glm::vec2(200.0f, 200.0f), glm::vec2(300.0f, 400.0f), 45.0f, glm::vec3(0.0f, 1.0f, 0.0f));
     }
+
 
 
     switch (screen) {
@@ -199,7 +213,7 @@ void Engine::readFromFile(std::string filepath) {
         cout << "Error opening file" << endl;
     }
     ins >> noskipws;
-    int xCoord = 0, yCoord = height-SIDE_LENGTH;
+    int xCoord = 0, yCoord = height-static_cast<float>(BACKGROUND);
     char letter;
     bool draw;
     color c;
@@ -220,15 +234,84 @@ void Engine::readFromFile(std::string filepath) {
             default: // newline
                 draw = false;
                 xCoord = 0;
-                yCoord -= SIDE_LENGTH;
+                yCoord -= static_cast<float>(BACKGROUND);
         }
         if (draw) {
-            squares.push_back(make_unique<Rect>(shapeShader, vec2(xCoord + SIDE_LENGTH/2, yCoord + SIDE_LENGTH/2), vec2(SIDE_LENGTH, SIDE_LENGTH), c));
-            xCoord += SIDE_LENGTH;
+            squares.push_back(make_unique<Rect>(shapeShader, vec2(xCoord + static_cast<float>(BACKGROUND)/2, yCoord + static_cast<float>(BACKGROUND)/2), vec2(static_cast<float>(BACKGROUND), static_cast<float>(BACKGROUND)), c));
+            xCoord += static_cast<float>(BACKGROUND);
         }
     }
     ins.close();
 }
+
+/*
+void Engine::batUp() {
+    ifstream ins("../res/art/bat-up.txt");
+    bat->up();
+    if (!ins) {
+        cout << "Error opening file" << endl;
+    }
+    ins >> noskipws;
+    int xCoord = bat->getLeft(), yCoord = bat->getBottom()-static_cast<float>(BAT);
+    char letter;
+    bool draw;
+    color c;
+    while (ins >> letter) {
+        draw = true;
+        switch(letter) {
+            case 'w': c = color(0, 0, 0, 0); break;
+            case 'c': c = color(32.0/255, 5.0/255, 33.0/255); break;
+            case 'd': c = color(134.0/255, 73.0/255, 135.0/255); break;
+            case 'e': c = color(237.0/255, 155.0/255, 186.0/255); break;
+            case 'f': c = color(195.0/255, 83.0/255, 129.0/255); break;
+            case 'a': c = color(1, 1, 1); break;
+
+            default:
+                draw = false;
+                xCoord = bat->getLeft();
+                yCoord -= static_cast<int>(BAT);
+        }
+        if (draw) {
+            batSquares.push_back(make_unique<Rect>(shapeShader, vec2(xCoord + static_cast<float>(BAT)/2, yCoord + static_cast<float>(BAT)/2), vec2(static_cast<float>(BAT), static_cast<float>(BAT)), c));
+        }
+    }
+    ins.close();
+}
+
+void Engine::batDown() {
+    ifstream ins("../res/art/bat-down.txt");
+    bat->down();
+    if (!ins) {
+        cout << "Error opening file" << endl;
+    }
+    ins >> noskipws;
+    int xCoord = bat->getLeft(), yCoord = bat->getBottom()-static_cast<float>(BAT);
+    char letter;
+    bool draw;
+    color c;
+    while (ins >> letter) {
+        draw = true;
+        switch(letter) {
+        case 'w': c = color(0, 0, 0, 0); break;
+        case 'c': c = color(32.0/255, 5.0/255, 33.0/255); break;
+        case 'd': c = color(134.0/255, 73.0/255, 135.0/255); break;
+        case 'e': c = color(237.0/255, 155.0/255, 186.0/255); break;
+        case 'f': c = color(195.0/255, 83.0/255, 129.0/255); break;
+        case 'a': c = color(1, 1, 1); break;
+
+        default:
+            draw = false;
+            xCoord = bat->getLeft();
+            yCoord -= static_cast<float>(BAT);
+        }
+        if (draw) {
+            batSquares.push_back(make_unique<Rect>(shapeShader, vec2(xCoord + static_cast<float>(BAT)/2, yCoord + static_cast<float>(BAT)/2), vec2(static_cast<float>(BAT), static_cast<float>(BAT)), c));
+        }
+    }
+    ins.close();
+}
+*/
+
 
 bool Engine::shouldClose() {
     return glfwWindowShouldClose(window);

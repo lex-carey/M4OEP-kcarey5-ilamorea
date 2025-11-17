@@ -104,7 +104,6 @@ add_definitions(-DGLFW_INCLUDE_NONE
 add_executable(${PROJECT_NAME} ${PROJECT_SOURCES} ${PROJECT_HEADERS}
                                ${PROJECT_SHADERS} ${PROJECT_CONFIGS}
                                ${VENDORS_SOURCES}
-        src/shapes/Bat.h
 )
 # Include libraries
 target_link_libraries(${PROJECT_NAME} glfw glm freetype)
