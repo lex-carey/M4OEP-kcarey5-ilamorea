@@ -28,3 +28,14 @@ void Bat::fly() {
     moveY(4);
     if (getTop() < 0) setPosY(0);
 }
+
+void Bat::plusX() {
+    up();
+    moveX(4);
+    if (getTop() < 0) setPosY(0);
+}
+void Bat::minusX() {
+    up();
+    moveX(-4);
+    if (getTop() < 0) setPosY(0);
+}

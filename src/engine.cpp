@@ -120,6 +120,12 @@ void Engine::processInput() {
     if (keys[GLFW_KEY_SPACE]) {
         bat->fly();
     }
+    if (keys[GLFW_KEY_RIGHT]) {
+        bat->plusX();
+    }
+    if (keys[GLFW_KEY_LEFT]) {
+        bat->minusX();
+    }
 }
 void Engine::update() {
     // Calculate delta time

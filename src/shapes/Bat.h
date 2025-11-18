@@ -12,6 +12,8 @@ class Bat : public Rect {
         void down();
         void fall();
         void fly();
+    void plusX();
+    void minusX();
 };
 
 
