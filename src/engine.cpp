@@ -55,7 +55,6 @@ void Engine::initShaders() {
     // Configure text shader and renderer
     textShader = shaderManager->loadShader("../res/shaders/text.vert", "../res/shaders/text.frag", nullptr, "text");
     fontRenderer = make_unique<FontRenderer>(shaderManager->getShader("text"), "../res/fonts/MxPlus_IBM_BIOS.ttf", 24);
-
     // Set uniforms
     textShader.setVector2f("vertex", vec4(100, 100, .5, .5));
     shapeShader.use();
@@ -69,12 +68,11 @@ void Engine::initShapes() {
     //Loading Sprite
     bat = make_unique<Bat>(shapeShader, vec2(400, 400), vec2(78, 52), color(134.0/255, 73.0/255, 135.0/255));
     // Init Cloud
-    clouds.push_back(Cloud(shapeShader, vec2(rand() % 200 + 100, rand() % 500 + 100)));
-    clouds.push_back(Cloud(shapeShader, vec2(400, rand () % 520 + 50)));
-    clouds.push_back(Cloud(shapeShader, vec2(325, rand () % 480 + 75)));
-    if (clouds.size() > 4) {
-        clouds.push_back(Cloud(shapeShader, vec2(rand () % 200 + 125, rand () % 480 + 75)));
-    }
+    clouds.push_back(Cloud(shapeShader, vec2(rand() %40 + 500, rand() % 500 + 100)));
+    clouds.push_back(Cloud(shapeShader, vec2(rand() % 80 + 500, rand () % 520 + 50)));
+    clouds.push_back(Cloud(shapeShader, vec2(rand () % 123 + 500, rand () % 480 + 75)));
+    clouds.push_back(Cloud(shapeShader, vec2(rand () % 100 + 500, rand () % 480 + 80)));
+    clouds.push_back(Cloud(shapeShader, vec2(rand () % 175 + 500, rand () % 480 + 65)));
     line = make_unique<Rect>(shapeShader, vec2(0,0), vec2 (1,800), color(0, 0, 0));
 }
 
@@ -106,14 +104,23 @@ void Engine::processInput() {
     // Mouse position is inverted because the origin of the window is in the top left corner
     MouseY = height - MouseY; // Invert y-axis of mouse position
     bool mousePressed = glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS;
+    if (screen == start){
     if (mousePressed == true) {
         screen = play;
-    }
+    }}
     // Save mousePressed for next frame
     mousePressedLastFrame = mousePressed;
 
+    for (const Cloud &c : clouds) {
+        if (c.isOverlapping(*bat)) {
+            screen = over;
+        }
+    }
 
-
+    if (screen == over) {
+        bat->setPosX(0);
+        bat->setPosY(800);
+    }
     if (keys[GLFW_KEY_SPACE]) {
         bat->fly();
     }
@@ -123,6 +130,7 @@ void Engine::processInput() {
     if (keys[GLFW_KEY_LEFT]) {
         bat->minusX();
     }
+
 }
 void Engine::update() {
     // Calculate delta time
@@ -168,8 +176,6 @@ void Engine::render() {
         bat->draw();
     }
 
-
-
     switch (screen) {
         case start: {
             string message = "Press left click to start";
@@ -183,7 +189,6 @@ void Engine::render() {
         }
 
         case play: {
-            //TODO: Figure out what we exactly need here.
 
 
             break;
@@ -192,9 +197,8 @@ void Engine::render() {
             string message = "You lose! Press R to restart, or escape to exit!";
             float score = glfwGetTime();
             string scoreString = to_string(score);
-            //TODO: This section should display time/score with an "GAME OVER" type message
-            this ->fontRenderer->renderText(message,width/2 - (12 * message.length()), height/2, PROJECTION, 1, vec3{1, 1, 1} );
-            this ->fontRenderer->renderText(scoreString,width/2 - (12 * message.length()), height/3, PROJECTION, 1, vec3{1, 1, 1} );
+        this->fontRenderer->renderText(message, width/2 - (12 * message.length()), height/2, PROJECTION, 1, vec3{1, 1, 1});
+            // this ->fontRenderer->renderText(scoreString,width/2 - (12 * message.length()), height/2, PROJECTION, 1, vec3{1, 1, 1} );
             break;
         }
     }
