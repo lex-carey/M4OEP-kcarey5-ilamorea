@@ -56,18 +56,10 @@ void Engine::initShaders() {
     textShader = shaderManager->loadShader("../res/shaders/text.vert", "../res/shaders/text.frag", nullptr, "text");
     fontRenderer = make_unique<FontRenderer>(shaderManager->getShader("text"), "../res/fonts/MxPlus_IBM_BIOS.ttf", 24);
 
-    //bat shader
-    batShader = shaderManager->loadShader("../res/shaders/sprite.vert", "../res/shaders/sprite.frag",  nullptr, "sprite");
-    spriteRenderer = make_unique<SpriteRenderer>(shaderManager->getShader("sprite"));
-    batTexture = shaderManager->loadTexture("../art/bat-down.png", true, "bat");
-
     // Set uniforms
     textShader.setVector2f("vertex", vec4(100, 100, .5, .5));
     shapeShader.use();
     shapeShader.setMatrix4("projection", this->PROJECTION);
-    batShader.use();
-    batShader.setInteger("image", 0);
-    batShader.setMatrix4("projection", this->PROJECTION);
 }
 
 void Engine::initShapes() {
@@ -75,7 +67,7 @@ void Engine::initShapes() {
     readFromFile("../res/art/scene.txt");
 
     //Loading Sprite
-    bat = make_unique<Bat>(batShader, vec2(400, 400), vec2(78, 52), color(1, 1, 1));
+    bat = make_unique<Bat>(shapeShader, vec2(400, 400), vec2(78, 52), color(134.0/255, 73.0/255, 135.0/255));
     // Init Cloud
     clouds.push_back(Cloud(shapeShader, vec2(rand() % 200 + 100, rand() % 500 + 100)));
     clouds.push_back(Cloud(shapeShader, vec2(400, rand () % 520 + 50)));
@@ -123,12 +115,7 @@ void Engine::processInput() {
         if (r.isOverlapping(*line)) {
             clouds.pop_back();
         }
-        // game over if bat hits ground
-        if (bat->getBottom() <= 0) screen = over;
-        //makes bat fall
-        if (!keys[GLFW_KEY_SPACE]) {
-            bat->fall();
-        }
+
     }
     if (keys[GLFW_KEY_SPACE]) {
         bat->fly();
@@ -150,6 +137,12 @@ void Engine::update() {
                 screen = over;
             }
         }
+        // game over if bat hits ground
+        if (bat->getBottom() <= 0) screen = over;
+        //makes bat fall
+        if (!keys[GLFW_KEY_SPACE]) {
+            bat->fall();
+        }
     }
 }
 void Engine::render() {
@@ -168,8 +161,8 @@ void Engine::render() {
         for (Cloud& c : clouds) {
             c.setUniformsAndDraw();
         }
-        spriteRenderer->DrawSprite(shaderManager->getTexture("bat"),
-        glm::vec2(200.0f, 200.0f), glm::vec2(300.0f, 400.0f), 45.0f, glm::vec3(0.0f, 1.0f, 0.0f));
+        bat->setUniforms();
+        bat->draw();
     }
 
 
@@ -242,7 +235,6 @@ void Engine::readFromFile(std::string filepath) {
     ins.close();
 }
 
-/*
 void Engine::batUp() {
     ifstream ins("../res/art/bat-up.txt");
     bat->up();
@@ -308,8 +300,6 @@ void Engine::batDown() {
     }
     ins.close();
 }
-*/
-
 
 bool Engine::shouldClose() {
     return glfwWindowShouldClose(window);

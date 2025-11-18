@@ -19,12 +19,12 @@ void Bat::down() {
 
 void Bat::fall() {
     down();
-    moveY(-4);
+    moveY(-2);
     if (getBottom() < 0) setPosY(0 + getSize().y / 2);
 }
 
 void Bat::fly() {
     up();
-    moveY(6);
-    if (getTop() > 800) setPosY(800 - getSize().y / 2);
+    moveY(4);
+    if (getTop() < 0) setPosY(0);
 }

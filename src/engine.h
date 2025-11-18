@@ -9,7 +9,6 @@
 #include "shader/shaderManager.h"
 #include "font/fontRenderer.h"
 #include "shapes/rect.h"
-#include "shader/spriteRenderer.h"
 //#include "shapes/shape.h"
 #include "shapes/Cloud.h"
 #include "shapes/Bat.h"
@@ -38,20 +37,20 @@ class Engine {
 
       /// @brief Responsible for rendering text on the screen.
       /// @details Initialized in initShaders()
-        unique_ptr<FontRenderer> fontRenderer;
-        unique_ptr<SpriteRenderer> spriteRenderer;
+          unique_ptr<FontRenderer> fontRenderer;
+
         // Shapes
         vector<unique_ptr<Shape>> squares;
         vector<unique_ptr<Shape>> batSquares;
         vector<Cloud> clouds;
+         vector<unique_ptr<Rect>> buildings1;
+         vector<unique_ptr<Rect>> buildings2;
+         vector<unique_ptr<Rect>> buildings3;
         unique_ptr<Rect> line;
         unique_ptr<Bat> bat;
         // Shaders
         Shader shapeShader;
         Shader textShader;
-        Shader batShader;
-        // Textures
-        Texture2D batTexture;
 
         double MouseX, MouseY;
         bool mousePressedLastFrame = false;
@@ -85,11 +84,9 @@ class Engine {
         /// @brief Populates squares vector with input from file.
         void readFromFile(string filepath);
 
-        /*
         void batUp();
 
         void batDown();
-        */
 
         /// @brief Processes input from the user.
         /// @details (e.g. keyboard input, mouse input, etc.)

@@ -2,7 +2,6 @@
 #define M4OEP_SHADERMANAGER_H
 
 #include "shader.h"
-#include "texture.h"
 
 #include <map>
 #include <iostream>
@@ -29,17 +28,12 @@ public:
     /// @return The shader with the given name
     Shader& getShader(std::string name);
 
-    Texture2D loadTexture(const char *file, bool alpha, std::string name);
-
-    Texture2D getTexture(std::string name);
-
      /// @brief Clears the shaders map
     void clear();
 
 private:
     /// @brief A map of shaders, with the key being the name of the shader
     std::map<std::string, Shader> shaders;
-    std::map<std::string, Texture2D> textures;
 
      /// @brief Loads and compiles a shader from a file
      /// @details This function is private because we only want to load shaders from within this class
@@ -47,10 +41,6 @@ private:
      /// @param fShaderFile The fragment shader file
      /// @param gShaderFile The geometry shader file (optional)
      /// @return The shader that was loaded
-    Shader loadShaderFromFile(const char *vShaderFile, const char *fShaderFile, const char *gShaderFile=nullptr);
-
-    Texture2D loadTextureFromFile(const char *file, bool alpha);
-};
-
+    Shader loadShaderFromFile(const char *vShaderFile, const char *fShaderFile, const char *gShaderFile=nullptr);};
 
 #endif //M4OEP_SHADERMANAGER_H
