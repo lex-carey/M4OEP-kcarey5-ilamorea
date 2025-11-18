@@ -111,12 +111,9 @@ void Engine::processInput() {
     }
     // Save mousePressed for next frame
     mousePressedLastFrame = mousePressed;
-    for ( Cloud& r : clouds) {
-        if (r.isOverlapping(*line)) {
-            clouds.pop_back();
-        }
 
-    }
+
+
     if (keys[GLFW_KEY_SPACE]) {
         bat->fly();
     }
