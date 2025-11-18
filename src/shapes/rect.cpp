@@ -47,7 +47,13 @@ float Rect::getTop() const         { return pos.y + (size.y / 2); }
 float Rect::getBottom() const      { return pos.y - (size.y / 2); }
 
 bool Rect::isOverlapping(const Rect &r1, const Rect &r2) {
-    return false; // Placeholder for compilation
+    if (r1.getRight() < r2.getLeft() ||
+        r2.getRight() < r1.getLeft() ||
+        r1.getBottom() > r2.getTop() ||
+        r2.getBottom() > r1.getTop()) {
+        return false;
+        }
+    return true;
 }
 
 bool Rect::isOverlapping(const Rect &other) const {

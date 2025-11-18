@@ -138,8 +138,8 @@ void Engine::update() {
             c.moveXWithinBounds(-1, width);
 
         }
-        for ( Cloud& r : clouds) {
-            if (r.isOverlapping(*bat)) {
+        for ( Cloud& c : clouds) {
+            if (c.isOverlapping(*bat)) {
                 screen = over;
             }
         }
