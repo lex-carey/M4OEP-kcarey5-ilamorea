@@ -23,7 +23,7 @@ We used the following concepts from the Module 4 concepts menu:
 With more time it would have been fun to figure out how to add sound effects to the game. The obvious thing we'd like to do with more time is figure out how to render the custom sprite as we think it would add a lot to the overall vibe of the game. 
 
 ## Bugs
-We currently know of no unresolved bugs
+Currently, the game over screen text won't render
 
 ## Grading
 We believe we have met the expectations defined for this project in the rubric. Despite not being able to achieve everything we wanted to for this project, this is a fully functional game (though not so pretty) and the features we have included are implemented well in our minds.

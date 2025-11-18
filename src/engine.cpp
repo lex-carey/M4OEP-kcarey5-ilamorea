@@ -197,7 +197,7 @@ void Engine::render() {
             string message = "You lose! Press R to restart, or escape to exit!";
             float score = glfwGetTime();
             string scoreString = to_string(score);
-        this->fontRenderer->renderText(message, width/2 - (12 * message.length()), height/2, PROJECTION, 1, vec3{1, 1, 1});
+            this->fontRenderer->renderText(message, width/2 - (12 * message.length()), height/2, PROJECTION, 1, vec3{1, 1, 1});
             // this ->fontRenderer->renderText(scoreString,width/2 - (12 * message.length()), height/2, PROJECTION, 1, vec3{1, 1, 1} );
             break;
         }
