@@ -66,10 +66,8 @@ void Engine::initShaders() {
     shapeShader.use();
     shapeShader.setMatrix4("projection", this->PROJECTION);
     batShader.use();
-    mat4 projection = glm::ortho(0.0f, static_cast<float>(this->width),
-        static_cast<float>(this->height), 0.0f, -1.0f, 1.0f);
     batShader.setInteger("image", 0);
-    batShader.setMatrix4("projection", projection);
+    batShader.setMatrix4("projection", this->PROJECTION);
 }
 
 void Engine::initShapes() {
